@@ -1,17 +1,19 @@
-
-console.log("failure 2");
-
 app.controller('meetupsController', ['$scope', '$resource',
 function($scope, $resource) {
-    $scope.meetups = [
-      {name: "loisfa"},
-      {name: "loisfa 2"}
-    ];
+    var Meetup = $resource('api/meetups');
+    // cf dans server.js app.use(...)
+
+    Meetup.query(function (results) {
+      $scope.meetups = results;
+    })
 
     $scope.createMeetup = function() {
-        if ($scope.meetupName!='') {
-        $scope.meetups.push({name: $scope.meetupName});
-        $scope.meetupName ='';
-      }
+      var meetup = new Meetup();
+      meetup.name = $scope.meetupName;
+      meetup.$save(function (result) {
+        console.log("ajouté");
+        $scope.meetups.push(result);
+        $scope.meetupName = '';
+      });
     };
 }]);
