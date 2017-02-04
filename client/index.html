@@ -13,6 +13,10 @@
     <script type="application/javascript" src="/js/app.js"></script>
     <script type="application/javascript" src="/js/meetups-controller.js"></script>
 
+    <textarea id='content-list' rows="4" cols="50">
+      essai
+    </textarea>
+
     <div ng-controller="meetupsController">
       <h1>There are {{meetups.length}} meetups</h1>
       <ul>
@@ -24,7 +28,10 @@
         <input type="text" placeholder="Meetup name" ng-model="meetupName"></input>
         <button type="submit">Add</button>
       </form>
-      <p>Hello!</p>
     </div>
+
+    <script type="application/javascript" src="/js/bundle.js"></script>
+    <!--<script type="application/javascript" src="/js/client-sharedb.js"></script>
   </body>
 </html>
+-->

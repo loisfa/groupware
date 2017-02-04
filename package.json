@@ -19,10 +19,16 @@
   "dependencies": {
     "angularjs": "0.0.1",
     "body-parser": "^1.15.2",
+    "browserify": "^14.0.0",
     "express": "^4.14.0",
-    "mongodb": "^2.2.21",
     "mongoose": "^4.7.7",
     "node": "0.0.0",
-    "nodejs": "0.0.0"
+    "nodejs": "0.0.0",
+    "sharedb": "~1.0.0-beta.7",
+    "sharedb-mongo": "^1.0.0-beta.3",
+    "sharedb-string-binding": "^1.0.0",
+    "uniq": "^1.0.1",
+    "websocket-json-stream": "0.0.3",
+    "ws": "^1.1.1"
   }
 }
