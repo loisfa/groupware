@@ -1,0 +1,130 @@
+body {margin:0;}
+
+ul.headerBar {
+    position: fixed;
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    top: 0;
+    width: 100%;
+
+}
+li.contact {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+.contact {
+    <!--background-color: #4CAF50;-->
+    font: 50px;
+    color: white;
+    margin:  5px;
+    padding:  5px;
+    text-align: center;
+    font-family:verdana;
+}
+
+div.stateWorkflow {
+    float: left;
+    width: 30%;
+    height: 1000px;
+    margin: 5px;
+    padding: 5px;
+    background-color: white;
+    color: gray;
+    text-align: center;
+    font-family:verdana;
+    <!-- border: 1px solid black; -->
+}
+
+div.task {
+  border: 1px solid orange;
+  margin: 5px;
+  padding: 5px;
+  text-align: left;
+  background-color: rgb(255,255,100);
+  color: black;
+}
+
+div.newTask {
+    margin:  5px;
+    padding:  5px;
+    text-align: left;
+    background-color: rgb(255,255,200);
+    color: grey;
+}
+
+div.newTask:hover {
+    border: 1px solid orange;
+    margin: 5px;
+    padding: 5px;
+    text-align: left;
+    background-color: rgb(255,255,100);
+    color: black;
+
+}
+
+.taskTitle {
+  font-size: 20px;
+  padding: 5px;
+  margin:  5px;
+}
+.taskTitle:hover {
+  background-color: rgb(255,255,150);
+}
+
+textarea.proxy {
+  color: red;
+  position: absolute;
+  visibility: visible;
+  left: 50000px;
+  top: 50000px;
+  z-index: -10;
+}
+
+
+textarea {
+    resize: none;
+    font-family:verdana;
+    background: transparent;
+    border: 0px;
+    overflow: hidden;
+    width:90%;
+    padding:5px;
+    margin:5px;
+    min-height: 10px;
+    max-height: 1000px;
+    min-width: 10px;
+    max-width: 1000px;
+}
+
+textarea:hover {
+    background: rgb(255,255,150);
+}
+
+.participantsDiv {
+  padding: 5px;
+  margin: 5px;
+}
+
+.participantsDiv:hover {
+  background: rgb(255,255,150);
+}
+
+.locator {
+  color: red;
+  position: absolute;
+  visibility: visible;
+  left: -100px;
+  top: 500px;
+  z-index: 10;
+}

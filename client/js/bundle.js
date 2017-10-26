@@ -2,30 +2,135 @@
 
 var ShareDB = require('sharedb/lib/client');
 var StringBinding = require('sharedb-string-binding');
-
-// Open WebSocket connection to ShareDB server
 var socket = new WebSocket('ws://' + window.location.host);
 var connection = new ShareDB.Connection(socket);
-/*socket.send(JSON.stringify({
-  id: "client1"
-}));*/
-/*
-var pathname = window.location.pathname;
-console.log("pathname1:" + pathname);
-pathname = pathname.split("/")[2];
-pathname = pathname.replace(/\//g, '');
-console.log("pathname2:" + pathname);
-*/
-/*
-var myWidgets = [];
-var myFormerWidgets = JSON.parse(localStorage.getItem('myWidgets'));
-myFormerWidgets === null ? console.log('No prior widget found') : myWidgets = myFormerWidgets;
-*/
-// Create local Doc instance mapped to 'examples' collection document with id 'textarea'
 
-var doc = connection.get('examples', 'documents');
-console.log("scoket.data: "+ socket.state);
 
+console.log("socket.data: "+ socket.state);
+getDoc = function(collection, id) {
+   docu =  connection.get(collection, id);
+   return docu;
+}
+
+
+window.listTask = 0;
+
+
+fetchDoc = function(docu, initialData, listener) {
+  docu.fetch(function(err) {
+    console.log("in fetch");
+   if (err) throw err;
+   if (docu.type === null) {
+     console.log("docu va etre créé");
+     console.log(initialData);
+     docu.create(initialData); // initialData = JSON format;
+     docu.type = ot-text;
+     console.log("doc created");
+     console.log("doc.type: "+docu.type);
+      docu.on('op', alertListener(docu, listener));
+     return;
+     //
+   }
+
+   //docu.data = {'mouseX':[0]};
+   docu.data = "ABCDEFG";
+   docu.type = "ot-text";
+   console.log("doc created");
+   console.log("doc.type: "+docu.type);
+   console.log("alert listener: " + listener+ "; data.mouseX: "+docu.data.mouseX);
+   console.log("alert listener: " + listener+ "; data.mouseY: "+docu.data.mouseY);
+   alertListener(docu, listener);
+  });
+}
+
+alertListener = function(docu, listener) {
+  console.log("alert listener: " + listener+ "; data: "+docu.data);
+  console.log("alert listener: " + listener+ "; data.mouseX: "+docu.data.mouseX);
+  console.log("alert listener: " + listener+ "; data.mouseY: "+docu.data.mouseY);
+  setMousePosition(docu, 500,500);
+}
+
+addContact = function(docu, indexContact) {
+  var path='contactIsOn';
+  var key = indexContact;
+  var obj = 1; // 1 = isIn
+  docu.submitOp([ {p:[path,key], oi:obj} ]);
+}
+
+removeContact = function(indexContact) {
+  var path='contactIsOn';
+  var key = indexContact;
+  var obj = 0; // 0 = isNOTIn
+  docu.submitOp([ {p:[path,key], oi:obj} ]);
+}
+
+
+setMousePosition = function(docu, mouseX, mouseY) {
+    var PATH='mouse';
+    var key = 'x';
+    var NEWVALUE = mouseX;
+    console.log("logggg");
+    //console.log(path);
+    console.log(key);
+    //console.log(obj);
+    console.log(docu.data);
+    //var op = [{p:['mouseX', 1], ld:100} ];
+    op = [1, ' hi ', 2, {d:3}];
+    docu.submitOp(op , function(err) {
+      if (err) { console.error(err); return; }
+    });
+    //docu.submitOp([ {p:[path,key], oi:obj} ]);
+    key = 'y';
+    obj = mouseY;
+    //docu.submitOp([{p: [key], na: obj}]);
+}
+
+
+
+
+subscribeBinding = function(docu, idElement, initialData) {
+  docu.subscribe(function(err) {
+      console.log("subscribe");
+      if (err) throw err;
+      if (docu.type === null) {
+          docu.create(initialData);
+          console.log("doc.type == null");
+      }
+
+      var element = document.getElementById(idElement);
+      console.log("idElement: "+idElement);
+      console.log("element: " +element);
+      console.log("element.value: " +element.value);
+      console.log("doc: " +docu);
+      var binding = new StringBinding(element, docu);
+      console.log("binding: " +binding);
+      binding.setup();
+      console.log("setup done. binding: " +binding);
+      //documentChange(docu);
+      //docu.on('op',documentChange(docu));
+    });
+}
+
+documentChange = function(docu) {
+    // doc.data = document.getElementById('content-list').innerHTML;
+    console.log("documentChange: doc.data: "+docu.data);
+    //document.getElementById('content-list').innerHTML = doc.data;
+    //socket.send(JSON.stringify({
+    //  id: "client1"
+    //}));
+    return;
+}
+
+
+//doc1 = getDoc('mouse', 'mouse-posfeef1');
+
+//console.log(doc1.data);
+//fetchDoc(doc1, {'mouseX':[0,50,100]}, "my personnal listener");
+
+
+
+
+/*
 doc.subscribe(function(err) {
     console.log("subscribe");
     if (err) throw err;
@@ -36,28 +141,22 @@ doc.subscribe(function(err) {
     console.log("doc.type != null");
 
     var element = document.getElementById('content-list');
+    console.log("element: " +element);
+    console.log("element.value: " +element.value);
+    console.log("doc: " +doc);
     var binding = new StringBinding(element, doc);
+    console.log("binding: " +binding);
     binding.setup();
-    console.log(binding);
+    console.log("setup done. binding: " +binding);
     documentChange();
+    document.getElementById('content-list').oninput = documentChange ;
     doc.on('op',documentChange);
 });
+*/
 
-var documentChange = function(){
-    // doc.data = document.getElementById('content-list').innerHTML;
-    console.log("documentChange: doc.data: "+doc.data);
-    //socket.send(JSON.stringify({
-    //  id: "client1"
-    //}));
-}
 
-var documentChange = function(){
-    // var extractedText = document.getElementById('editable-document').innerText;
-    //document.getElementById('viewable-document').innerHTML = extractedText //markdown.toHTML(extractedText);
-    console.log("documentChange: doc.data: "+doc.data);
-}
 
-document.getElementById('content-list').oninput = documentChange ;
+// fonction pour créer une tache
 
 
 /*
@@ -337,12 +436,15 @@ json.invert = function(op) {
 };
 
 json.checkValidOp = function(op) {
+  console.log(op.length);
   for (var i = 0; i < op.length; i++) {
+    console.log(op[i].p);
     if (!isArray(op[i].p)) throw new Error('Missing path');
   }
 };
 
 json.checkList = function(elem) {
+  console.log(elem);
   if (!isArray(elem))
     throw new Error('Referenced element not a list');
 };
@@ -409,6 +511,10 @@ json.apply = function(snapshot, op) {
 
     // Number add
     } else if (c.na !== void 0) {
+      console.log("elem size"+elem.length);
+      console.log("elem: "+elem);
+      console.log("key: "+key);
+      console.log("elemkey: "+elem[key]);
       if (typeof elem[key] != 'number')
         throw new Error('Referenced element not a number');
 

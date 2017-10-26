@@ -9,8 +9,6 @@ var connection = new ShareDB.Connection(socket);
   id: "client1"
 }));*/
 
-
-
 /*
 var pathname = window.location.pathname;
 console.log("pathname1:" + pathname);
@@ -36,7 +34,7 @@ var doc = connection.get('examples', 'documents');
 console.log("scoket.data: "+ socket.data);
 
 doc.subscribe(function(err) {
-    console.log("subscribe");
+    console.log("subscribe to doc: " + doc);
     if (err) throw err;
     if (doc.type === null) {
         doc.create('new data');
